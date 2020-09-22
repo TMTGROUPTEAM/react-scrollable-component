@@ -15,15 +15,32 @@ npm install --save react-scrollable-component
 ```tsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-scrollable-component'
-import 'react-scrollable-component/dist/index.css'
+import ReactScrollableComponent from 'react-scrollable-component'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return (
+        <ReactScrollableComponent scrollThumbStyle={{width: "4px", backgroundColor: "rgba(0, 0, 0, 0.5)", borderRadius: "2px"}} maxHeight={90}>
+             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad at dignissimos eveniet exercitationem facilis
+                iste laboriosam libero molestiae nostrum obcaecati officiis porro possimus quos saepe sunt tempora, totam
+                veniam?
+             </p>
+        </ReactScrollableComponent>
+    )
   }
 }
 ```
+
+### Props
+```tsx
+scrollThumbStyle?: React.CSSProperties  // Style of the scrollthumb. You can not change the  height, top, right and position properties.
+maxHeight?: number                      // The maximum height of the scrollable container
+className?: string                      // Name of the scrollable container class
+hiddenIfNotUsed?: boolean               // Property to hide the scrollbar when there is no mouse wheel action (default false)
+```
+
+### Note
+This component will use the default scrollbar on mobile devices and tablets
 
 ## License
 
