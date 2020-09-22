@@ -44,6 +44,13 @@ const ReactScrollableComponent = ({
     position = container.current?.scrollTop || 0
     const thumbOffset = (top / 100) * scrollThumb.current!.clientHeight
     scrollThumb.current!.style.top = `calc(${top}% + ${position}px - ${thumbOffset}px)`
+    if (
+      position > 0 &&
+      position <
+        container.current!.scrollHeight - container!.current.clientHeight
+    ) {
+      e.stopPropagation()
+    }
   }
   const addWheelListener = () => {
     if ('onwheel' in document)
