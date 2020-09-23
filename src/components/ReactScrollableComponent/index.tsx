@@ -16,6 +16,20 @@ const ReactScrollableComponent = ({
   hiddenIfNotUsed = true
 }: Props) => {
   let scrolling = false
+  const firstScrollableParent = (node?: HTMLElement): HTMLElement | null => {
+    if (!node) return null
+    if (
+      node.scrollHeight > node.clientHeight &&
+      ((node.style.overflow !== 'hidden' &&
+        node.style.overflowY !== 'hidden') ||
+        node.getAttribute('scroll-parent'))
+    ) {
+      node.setAttribute('scroll-parent', 'true')
+      return node
+    }
+
+    return firstScrollableParent(node.parentElement || undefined)
+  }
   const showThumb = () => {
     if (!scrollThumb.current || !hiddenIfNotUsed || scrolling) return
     scrollThumb.current!.style.visibility = 'visible'
@@ -49,8 +63,22 @@ const ReactScrollableComponent = ({
       position <
         container.current!.scrollHeight - container!.current.clientHeight
     ) {
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.style.overflow = 'hidden'
       e.stopPropagation()
+    } else {
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.style.overflow = 'auto'
     }
+    setTimeout(() => {
+      firstScrollableParent(
+        container.current!.parentElement || undefined
+      )!.style.overflow = 'auto'
+    }, 250)
   }
   const addWheelListener = () => {
     if ('onwheel' in document)
