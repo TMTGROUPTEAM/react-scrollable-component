@@ -74,26 +74,54 @@ const ReactScrollableComponent = ({
           container.current!.parentElement || undefined
         )!.style.overflow = 'auto'
     }
-    setTimeout(() => {
-      firstScrollableParent(
-        container.current!.parentElement || undefined
-      )!.style.overflow = 'auto'
-    }, 250)
+  }
+  const parentScrollHandler = () => {
+    firstScrollableParent(
+      container.current!.parentElement || undefined
+    )!.style.overflow = 'auto'
   }
   const addWheelListener = () => {
-    if ('onwheel' in document)
+    if ('onwheel' in document){
       container.current!.addEventListener('wheel', handler)
-    else if ('onmousewheel' in document)
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.addEventListener('wheel', parentScrollHandler)
+    } else if ('onmousewheel' in document) {
       container.current!.addEventListener('mousewheel', handler)
-    else container.current!.addEventListener('MozMousePixelScroll', handler)
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.addEventListener('mousewheel', parentScrollHandler)
+    } else {
+      container.current!.addEventListener('MozMousePixelScroll', handler)
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.addEventListener('MozMousePixelScroll', parentScrollHandler)
+    }
   }
 
   const removeWheelListener = () => {
-    if ('onwheel' in document)
+    if ('onwheel' in document) {
       container.current!.removeEventListener('wheel', handler)
-    else if ('onmousewheel' in document)
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.removeEventListener('wheel', parentScrollHandler)
+    } else if ('onmousewheel' in document) {
       container.current!.removeEventListener('mousewheel', handler)
-    else container.current!.removeEventListener('MozMousePixelScroll', handler)
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.removeEventListener('mousewheel', parentScrollHandler)
+    } else {
+      container.current!.removeEventListener('MozMousePixelScroll', handler)
+      if (firstScrollableParent(container.current!.parentElement || undefined))
+        firstScrollableParent(
+          container.current!.parentElement || undefined
+        )!.removeEventListener('MozMousePixelScroll', parentScrollHandler)
+    }
   }
 
   const initialize = () => {
