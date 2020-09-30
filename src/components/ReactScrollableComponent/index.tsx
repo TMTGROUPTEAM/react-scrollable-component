@@ -76,9 +76,10 @@ const ReactScrollableComponent = ({
     }
   }
   const parentScrollHandler = () => {
-    firstScrollableParent(
-      container.current!.parentElement || undefined
-    )!.style.overflow = 'auto'
+    if (firstScrollableParent(container.current!.parentElement || undefined))
+      firstScrollableParent(
+        container.current!.parentElement || undefined
+      )!.style.overflow = 'auto'
   }
   const addWheelListener = () => {
     if ('onwheel' in document){
